@@ -1,5 +1,5 @@
-import { TldrawCanvas } from './components/TldrawCanvas'
+import { LandingPage } from './components/LandingPage'
 
 export default function Page() {
-	return <TldrawCanvas />
+	return <LandingPage />
 }
