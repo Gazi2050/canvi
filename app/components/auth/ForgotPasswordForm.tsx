@@ -7,7 +7,7 @@ import { AuthButton } from './AuthButton'
 import { AuthField } from './AuthField'
 import { AuthFormCard } from './AuthFormCard'
 
-const REDIRECT_AFTER_SIGN_IN = '/app'
+const REDIRECT_AFTER_SIGN_IN = '/app/dashboard'
 
 export function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
 	const { signIn, errors, fetchStatus } = useSignIn()

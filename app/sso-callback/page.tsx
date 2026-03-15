@@ -4,7 +4,7 @@ import { useClerk, useSignIn, useSignUp } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 
-const REDIRECT_AFTER_AUTH = '/app'
+const REDIRECT_AFTER_AUTH = '/app/dashboard'
 
 export default function SSOCallbackPage() {
 	const clerk = useClerk()

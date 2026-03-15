@@ -10,7 +10,7 @@ import { AuthField } from './AuthField'
 import { AuthFormCard } from './AuthFormCard'
 import { AuthGoogleButton } from './AuthGoogleButton'
 
-const REDIRECT_AFTER_SIGN_IN = '/app'
+const REDIRECT_AFTER_SIGN_IN = '/app/dashboard'
 
 export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void } = {}) {
 	const { signIn, errors, fetchStatus } = useSignIn()
