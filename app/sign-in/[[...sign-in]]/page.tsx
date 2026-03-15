@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { ForgotPasswordForm } from '../../components/auth/ForgotPasswordForm'
-import { SignInForm } from '../../components/auth/SignInForm'
+import { ForgotPasswordForm } from '@/components/custom/auth/ForgotPasswordForm'
+import { SignInForm } from '@/components/custom/auth/SignInForm'
 
 export default function SignInPage() {
 	const [showForgotPassword, setShowForgotPassword] = useState(false)

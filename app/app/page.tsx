@@ -1,4 +1,4 @@
-import { TldrawCanvas } from '../components/TldrawCanvas'
+import { TldrawCanvas } from '@/components/custom/canvas/TldrawCanvas'
 
 export default function AppPage() {
 	return <TldrawCanvas />

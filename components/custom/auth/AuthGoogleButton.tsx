@@ -1,7 +1,9 @@
 'use client'
 
 import { ButtonHTMLAttributes } from 'react'
+import { Button } from '@/components/ui/button'
 import { GoogleIcon } from './GoogleIcon'
+import { cn } from '@/lib/utils'
 
 type AuthGoogleButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	loading?: boolean
@@ -12,18 +14,19 @@ export function AuthGoogleButton({
 	children,
 	loading = false,
 	disabled,
-	className = '',
+	className,
 	...props
 }: AuthGoogleButtonProps) {
 	return (
-		<button
+		<Button
 			type="button"
+			variant="outline"
+			className={cn('w-full', className)}
 			disabled={disabled ?? loading}
-			className={`w-full inline-flex items-center justify-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg border border-foreground/15 bg-background text-foreground hover:bg-foreground/[0.04] focus:outline-none focus:ring-2 focus:ring-foreground/10 focus:ring-offset-0 disabled:opacity-50 disabled:pointer-events-none transition-colors ${className}`}
 			{...props}
 		>
 			<GoogleIcon />
 			{loading ? 'Please wait…' : children}
-		</button>
+		</Button>
 	)
 }

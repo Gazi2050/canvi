@@ -4,6 +4,7 @@ import { useClerk, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 
 export function DashboardSidebar() {
 	const { user } = useUser()
@@ -49,19 +50,17 @@ export function DashboardSidebar() {
 				</div>
 			</div>
 			<nav className="flex-1 p-4 flex flex-col gap-1">
-				<Link
-					href="/app"
-					className="px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-foreground/5 transition-colors"
-				>
-					Canvas
-				</Link>
-				<button
+				<Button variant="ghost" className="w-full justify-start" asChild>
+					<Link href="/app">Canvas</Link>
+				</Button>
+				<Button
 					type="button"
+					variant="ghost"
+					className="w-full justify-start text-foreground/80 hover:text-foreground"
 					onClick={handleLogout}
-					className="w-full text-left px-3 py-2.5 text-sm font-medium text-foreground/80 rounded-lg hover:bg-foreground/5 hover:text-foreground transition-colors"
 				>
 					Logout
-				</button>
+				</Button>
 			</nav>
 		</aside>
 	)

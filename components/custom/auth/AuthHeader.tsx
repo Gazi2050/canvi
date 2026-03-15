@@ -11,7 +11,7 @@ export function AuthHeader() {
 	return (
 		<header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-end gap-3 px-4 py-2 bg-background/80 backdrop-blur border-b border-foreground/10">
 			<Show when="signed-out">
-				<SignInButton mode="redirect" redirectUrl="/sign-in">
+				<SignInButton mode="redirect" forceRedirectUrl="/sign-in">
 					<button
 						type="button"
 						className="px-3 py-1.5 text-sm font-medium text-foreground hover:opacity-80"
@@ -19,7 +19,7 @@ export function AuthHeader() {
 						Sign in
 					</button>
 				</SignInButton>
-				<SignUpButton mode="redirect" redirectUrl="/sign-up">
+				<SignUpButton mode="redirect" forceRedirectUrl="/sign-up">
 					<button
 						type="button"
 						className="px-3 py-1.5 text-sm font-medium rounded-md bg-foreground text-background hover:opacity-90"

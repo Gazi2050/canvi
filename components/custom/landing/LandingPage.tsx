@@ -2,6 +2,7 @@
 
 import { Show, SignInButton, SignUpButton } from '@clerk/nextjs'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export function LandingPage() {
 	return (
@@ -16,30 +17,19 @@ export function LandingPage() {
 			</div>
 			<div className="flex flex-wrap items-center justify-center gap-3">
 				<Show when="signed-out">
-					<SignInButton mode="redirect" redirectUrl="/sign-in">
-						<button
-							type="button"
-							className="px-5 py-2.5 text-sm font-medium rounded-md border border-foreground/20 text-foreground hover:bg-foreground/5"
-						>
+					<SignInButton mode="redirect" forceRedirectUrl="/sign-in">
+						<Button type="button" variant="outline">
 							Sign in
-						</button>
+						</Button>
 					</SignInButton>
-					<SignUpButton mode="redirect" redirectUrl="/sign-up">
-						<button
-							type="button"
-							className="px-5 py-2.5 text-sm font-medium rounded-md bg-foreground text-background hover:opacity-90"
-						>
-							Sign up
-						</button>
+					<SignUpButton mode="redirect" forceRedirectUrl="/sign-up">
+						<Button type="button">Sign up</Button>
 					</SignUpButton>
 				</Show>
 				<Show when="signed-in">
-					<Link
-						href="/app"
-						className="px-5 py-2.5 text-sm font-medium rounded-md bg-foreground text-background hover:opacity-90"
-					>
-						Go to app
-					</Link>
+					<Button asChild>
+						<Link href="/app">Go to app</Link>
+					</Button>
 				</Show>
 			</div>
 		</main>

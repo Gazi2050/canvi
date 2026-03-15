@@ -1,5 +1,5 @@
-import { DashboardSidebar } from '../../components/DashboardSidebar'
-import { ProjectsList } from '../../components/ProjectsList'
+import { DashboardSidebar } from '@/components/custom/dashboard/DashboardSidebar'
+import { ProjectsList } from '@/components/custom/dashboard/ProjectsList'
 
 export default function DashboardPage() {
 	return (

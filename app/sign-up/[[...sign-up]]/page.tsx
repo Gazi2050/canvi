@@ -1,6 +1,6 @@
 'use client'
 
-import { SignUpForm } from '../../components/auth/SignUpForm'
+import { SignUpForm } from '@/components/custom/auth/SignUpForm'
 
 export default function SignUpPage() {
 	return (
