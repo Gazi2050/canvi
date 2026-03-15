@@ -1,5 +1,5 @@
-import { TldrawCanvas } from '@/components/custom/canvas/TldrawCanvas'
+import { redirect } from 'next/navigation'
 
 export default function AppPage() {
-	return <TldrawCanvas />
+	redirect('/app/dashboard')
 }

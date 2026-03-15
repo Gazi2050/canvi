@@ -84,7 +84,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 	if (showCodeStep) {
 		return (
 			<AuthFormCard siteName="Freespace" title="Verify your email">
-				<form onSubmit={handleVerifyCode} className="space-y-4">
+				<form onSubmit={handleVerifyCode} className="space-y-5">
 					<AuthField
 						label="Verification code"
 						type="text"
@@ -96,7 +96,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 				</form>
 				<button
 					type="button"
-					className="mt-3 text-sm text-foreground/60 hover:text-foreground/90 transition-colors"
+					className="mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
 					onClick={() => signIn?.reset()}
 				>
 					Start over
@@ -107,7 +107,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 
 	return (
 		<AuthFormCard siteName="Freespace" title="Welcome back">
-			<form onSubmit={handleSubmit} className="space-y-4">
+			<form onSubmit={handleSubmit} className="space-y-5">
 				<AuthField
 					label="Email"
 					type="email"
@@ -127,10 +127,10 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 					error={errors?.fields?.password?.message}
 				/>
 				{onForgotPassword && (
-					<div className="flex justify-end">
+					<div className="flex justify-end -mt-1">
 						<button
 							type="button"
-							className="text-sm text-foreground/60 hover:text-foreground/90 transition-colors"
+							className="text-sm text-muted-foreground hover:text-foreground transition-colors"
 							onClick={onForgotPassword}
 						>
 							Forgot password?
@@ -138,7 +138,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 					</div>
 				)}
 				{identifierNotFound && (
-					<p className="text-sm text-foreground/70">
+					<p className="text-sm text-muted-foreground">
 						No account with this email.{' '}
 						<Link href="/sign-up" className="font-medium text-foreground hover:underline">
 							Sign up
@@ -147,11 +147,11 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 				)}
 				<AuthButton loading={fetchStatus === 'fetching'}>Sign in</AuthButton>
 			</form>
-			<div className="mt-6 pt-6 border-t border-foreground/10">
-				<div className="relative mb-4 flex items-center gap-3">
-					<span className="flex-1 border-t border-foreground/10" />
-					<span className="text-xs font-medium text-foreground/45">or</span>
-					<span className="flex-1 border-t border-foreground/10" />
+			<div className="mt-8 pt-6 border-t border-border">
+				<div className="relative mb-5 flex items-center gap-3">
+					<span className="flex-1 border-t border-border" />
+					<span className="text-xs font-medium text-muted-foreground">or</span>
+					<span className="flex-1 border-t border-border" />
 				</div>
 				<AuthGoogleButton
 					loading={fetchStatus === 'fetching'}
@@ -160,9 +160,9 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 					Sign in with Google
 				</AuthGoogleButton>
 			</div>
-			<p className="mt-6 text-center text-sm text-foreground/60">
+			<p className="mt-6 text-center text-sm text-muted-foreground">
 				Don&apos;t have an account?{' '}
-				<Link href="/sign-up" className="font-medium text-foreground hover:underline">
+				<Link href="/sign-up" className="font-medium text-foreground hover:underline underline-offset-2">
 					Sign up
 				</Link>
 			</p>

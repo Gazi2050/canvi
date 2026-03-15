@@ -53,10 +53,10 @@ export function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
 	if (!codeSent) {
 		return (
 			<AuthFormCard siteName="Freespace" title="Forgot password?">
-				<p className="mb-4 text-sm text-foreground/60">
+				<p className="mb-5 text-sm text-muted-foreground">
 					Enter your email and we&apos;ll send you a code to reset your password.
 				</p>
-				<form onSubmit={handleSendCode} className="space-y-4">
+				<form onSubmit={handleSendCode} className="space-y-5">
 					<AuthField
 						label="Email"
 						type="email"
@@ -68,7 +68,7 @@ export function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
 					/>
 					<AuthButton loading={fetchStatus === 'fetching'}>Send reset code</AuthButton>
 				</form>
-				<button type="button" className="mt-3 text-sm text-foreground/60 hover:text-foreground/90 transition-colors" onClick={onBack}>
+				<button type="button" className="mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors" onClick={onBack}>
 					Back to sign in
 				</button>
 			</AuthFormCard>
@@ -78,7 +78,7 @@ export function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
 	if (signIn.status !== 'needs_new_password') {
 		return (
 			<AuthFormCard siteName="Freespace" title="Check your email">
-				<form onSubmit={handleVerifyCode} className="space-y-4">
+				<form onSubmit={handleVerifyCode} className="space-y-5">
 					<AuthField
 						label="Verification code"
 						type="text"
@@ -89,7 +89,7 @@ export function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
 					/>
 					<AuthButton loading={fetchStatus === 'fetching'}>Verify code</AuthButton>
 				</form>
-				<button type="button" className="mt-3 text-sm text-foreground/60 hover:text-foreground/90 transition-colors" onClick={onBack}>
+				<button type="button" className="mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors" onClick={onBack}>
 					Back to sign in
 				</button>
 			</AuthFormCard>
@@ -98,7 +98,7 @@ export function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
 
 	return (
 		<AuthFormCard siteName="Freespace" title="Set new password">
-			<form onSubmit={handleSubmitPassword} className="space-y-4">
+			<form onSubmit={handleSubmitPassword} className="space-y-5">
 				<AuthField
 					label="New password"
 					type="password"

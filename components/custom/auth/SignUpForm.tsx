@@ -63,10 +63,10 @@ export function SignUpForm() {
 	if (showCodeStep) {
 		return (
 			<AuthFormCard siteName="Freespace" title="Verify your email">
-				<p className="mb-4 text-sm text-foreground/60">
+				<p className="mb-5 text-sm text-muted-foreground">
 					We sent a verification code to {email}. Enter it below.
 				</p>
-				<form onSubmit={handleVerifyCode} className="space-y-4">
+				<form onSubmit={handleVerifyCode} className="space-y-5">
 					<AuthField
 						label="Verification code"
 						type="text"
@@ -79,7 +79,7 @@ export function SignUpForm() {
 				</form>
 				<button
 					type="button"
-					className="mt-3 text-sm text-foreground/60 hover:text-foreground/90 transition-colors"
+					className="mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
 					onClick={() => signUp?.reset()}
 				>
 					Start over
@@ -90,7 +90,7 @@ export function SignUpForm() {
 
 	return (
 		<AuthFormCard siteName="Freespace" title="Create an account">
-			<form onSubmit={handleSubmit} className="space-y-4">
+			<form onSubmit={handleSubmit} className="space-y-5">
 				<AuthField
 					label="Email"
 					type="email"
@@ -112,11 +112,11 @@ export function SignUpForm() {
 				<div id="clerk-captcha" />
 				<AuthButton loading={fetchStatus === 'fetching'}>Sign up</AuthButton>
 			</form>
-			<div className="mt-6 pt-6 border-t border-foreground/10">
-				<div className="relative mb-4 flex items-center gap-3">
-					<span className="flex-1 border-t border-foreground/10" />
-					<span className="text-xs font-medium text-foreground/45">or</span>
-					<span className="flex-1 border-t border-foreground/10" />
+			<div className="mt-8 pt-6 border-t border-border">
+				<div className="relative mb-5 flex items-center gap-3">
+					<span className="flex-1 border-t border-border" />
+					<span className="text-xs font-medium text-muted-foreground">or</span>
+					<span className="flex-1 border-t border-border" />
 				</div>
 				<AuthGoogleButton
 					loading={fetchStatus === 'fetching'}
@@ -125,9 +125,9 @@ export function SignUpForm() {
 					Sign up with Google
 				</AuthGoogleButton>
 			</div>
-			<p className="mt-6 text-center text-sm text-foreground/60">
+			<p className="mt-6 text-center text-sm text-muted-foreground">
 				Already have an account?{' '}
-				<Link href="/sign-in" className="font-medium text-foreground hover:underline">
+				<Link href="/sign-in" className="font-medium text-foreground hover:underline underline-offset-2">
 					Sign in
 				</Link>
 			</p>

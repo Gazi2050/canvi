@@ -1,15 +1,18 @@
 'use client'
 
 import { useClerk, useUser } from '@clerk/nextjs'
+import { LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 export function DashboardSidebar() {
 	const { user } = useUser()
 	const { signOut } = useClerk()
 	const router = useRouter()
+	const pathname = usePathname()
 
 	const displayName =
 		user?.fullName ?? [user?.firstName, user?.lastName].filter(Boolean).join(' ') ?? 'User'
@@ -21,6 +24,8 @@ export function DashboardSidebar() {
 		await signOut({ redirectUrl: '/' })
 		router.push('/')
 	}
+
+	const isActive = (path: string) => pathname === path
 
 	return (
 		<aside className="w-64 shrink-0 border-r border-foreground/10 bg-foreground/[0.02] flex flex-col min-h-screen">
@@ -50,18 +55,36 @@ export function DashboardSidebar() {
 				</div>
 			</div>
 			<nav className="flex-1 p-4 flex flex-col gap-1">
-				<Button variant="ghost" className="w-full justify-start" asChild>
-					<Link href="/app">Canvas</Link>
+				<Button
+					variant="ghost"
+					className={cn('w-full justify-start', isActive('/app/dashboard') && 'bg-foreground/5')}
+					asChild
+				>
+					<Link href="/app/dashboard" aria-current={isActive('/app/dashboard') ? 'page' : undefined}>
+						Home
+					</Link>
 				</Button>
 				<Button
-					type="button"
 					variant="ghost"
-					className="w-full justify-start text-foreground/80 hover:text-foreground"
+					className={cn('w-full justify-start', isActive('/app/profile') && 'bg-foreground/5')}
+					asChild
+				>
+					<Link href="/app/profile" aria-current={isActive('/app/profile') ? 'page' : undefined}>
+						Profile
+					</Link>
+				</Button>
+			</nav>
+			<div className="border-t border-foreground/10 p-4 mt-auto">
+				<Button
+					type="button"
+					variant="outline"
+					className="w-full justify-center gap-2 text-foreground/70 hover:text-foreground"
 					onClick={handleLogout}
 				>
 					Logout
+					<LogOut className="size-4" />
 				</Button>
-			</nav>
+			</div>
 		</aside>
 	)
 }

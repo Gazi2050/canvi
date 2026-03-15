@@ -14,7 +14,7 @@ type AuthFormCardProps = {
 export function AuthFormCard({ siteName, title, children, className }: AuthFormCardProps) {
 	return (
 		<Card className={cn('w-full max-w-[420px]', className)}>
-			<CardHeader className="mb-8 text-center">
+			<CardHeader className="mb-6 text-center px-6 pt-6">
 				{siteName && (
 					<p className="text-[11px] font-semibold tracking-[0.25em] text-foreground/40 uppercase">
 						{siteName}
@@ -24,7 +24,9 @@ export function AuthFormCard({ siteName, title, children, className }: AuthFormC
 					{title}
 				</CardTitle>
 			</CardHeader>
-			<CardContent>{children}</CardContent>
+			<CardContent className="px-6 pb-8 pt-0">
+				{children}
+			</CardContent>
 		</Card>
 	)
 }
