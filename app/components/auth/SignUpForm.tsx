@@ -10,7 +10,7 @@ import { AuthField } from './AuthField'
 import { AuthFormCard } from './AuthFormCard'
 import { AuthGoogleButton } from './AuthGoogleButton'
 
-const REDIRECT_AFTER_SIGN_UP = '/app'
+const REDIRECT_AFTER_SIGN_UP = '/app/dashboard'
 
 export function SignUpForm() {
 	const { signUp, errors, fetchStatus } = useSignUp()
