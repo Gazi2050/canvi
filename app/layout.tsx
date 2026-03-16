@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { AppRootProvider } from '@/lib/providers/AppRootProvider'
 import './globals.css'
 
 const geistSans = Geist({
@@ -31,7 +32,7 @@ export default function RootLayout({
           signUpUrl="/sign-up"
           afterSignOutUrl="/"
         >
-          {children}
+          <AppRootProvider>{children}</AppRootProvider>
         </ClerkProvider>
       </body>
     </html>

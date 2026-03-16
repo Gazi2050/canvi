@@ -1,5 +1,5 @@
 type ProfileUser = {
-  update: (params: { firstName?: string; lastName?: string }) => Promise<void>
+  update: (params: { firstName?: string; lastName?: string }) => Promise<unknown>
   setProfileImage: (params: { file: File }) => Promise<unknown>
   updatePassword: (params: {
     currentPassword?: string
