@@ -1,7 +1,6 @@
 'use client'
 
 import { useSignIn } from '@clerk/nextjs'
-import type { OAuthStrategy } from '@clerk/types'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -11,6 +10,7 @@ import { AuthFormCard } from './AuthFormCard'
 import { AuthGoogleButton } from './AuthGoogleButton'
 
 const REDIRECT_AFTER_SIGN_IN = '/app/dashboard'
+type OAuthStrategy = 'oauth_google'
 
 export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void } = {}) {
 	const { signIn, errors, fetchStatus } = useSignIn()
@@ -21,6 +21,11 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 	const [showCodeStep, setShowCodeStep] = useState(false)
 	const [identifierNotFound, setIdentifierNotFound] = useState(false)
 
+	const getFirstErrorCode = (err: unknown): string | undefined => {
+		const maybe = err as { errors?: Array<{ code?: string }> }
+		return maybe?.errors?.[0]?.code
+	}
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		setIdentifierNotFound(false)
@@ -28,7 +33,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword?: () => void
 
 		const { error } = await signIn.password({ emailAddress: email, password })
 		if (error) {
-			const code = error.errors?.[0]?.code
+			const code = getFirstErrorCode(error)
 			if (code === 'form_identifier_not_found') {
 				setIdentifierNotFound(true)
 				return

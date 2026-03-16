@@ -13,15 +13,15 @@ export default function SSOCallbackPage() {
 	const router = useRouter()
 	const hasRun = useRef(false)
 
-	const navigate = (url: string) => {
-		if (url.startsWith('http')) window.location.href = url
-		else router.push(url)
-	}
-
 	useEffect(() => {
 		;(async () => {
 			if (!clerk.loaded || hasRun.current || !signIn || !signUp) return
 			hasRun.current = true
+
+			const navigate = (url: string) => {
+				if (url.startsWith('http')) window.location.href = url
+				else router.push(url)
+			}
 
 			if (signIn.status === 'complete') {
 				await signIn.finalize({
@@ -34,8 +34,13 @@ export default function SSOCallbackPage() {
 			}
 
 			if (signUp.isTransferable) {
-				await signIn.create({ transfer: true })
-				if (signIn.status === 'complete') {
+				const { error } = await signIn.create({ transfer: true })
+				if (error) {
+					router.push('/sign-in')
+					return
+				}
+				const signInStatus = (signIn as unknown as { status?: string }).status
+				if (signInStatus === 'complete') {
 					await signIn.finalize({
 						navigate: async ({ session, decorateUrl }) => {
 							if (session?.currentTask) return

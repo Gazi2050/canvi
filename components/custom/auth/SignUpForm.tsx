@@ -1,7 +1,6 @@
 'use client'
 
 import { useSignUp } from '@clerk/nextjs'
-import type { OAuthStrategy } from '@clerk/types'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -11,6 +10,7 @@ import { AuthFormCard } from './AuthFormCard'
 import { AuthGoogleButton } from './AuthGoogleButton'
 
 const REDIRECT_AFTER_SIGN_UP = '/app/dashboard'
+type OAuthStrategy = 'oauth_google'
 
 export function SignUpForm() {
 	const { signUp, errors, fetchStatus } = useSignUp()
@@ -19,6 +19,14 @@ export function SignUpForm() {
 	const [password, setPassword] = useState('')
 	const [code, setCode] = useState('')
 	const [showCodeStep, setShowCodeStep] = useState(false)
+
+	const emailError =
+		(errors as unknown as { fields?: Record<string, { message?: string }> })?.fields?.identifier
+			?.message ??
+		(errors as unknown as { fields?: Record<string, { message?: string }> })?.fields?.emailAddress
+			?.message ??
+		(errors as unknown as { fields?: Record<string, { message?: string }> })?.fields?.email_address
+			?.message
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -98,7 +106,7 @@ export function SignUpForm() {
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					required
-					error={errors?.fields?.identifier?.message}
+					error={emailError}
 				/>
 				<AuthField
 					label="Password"
