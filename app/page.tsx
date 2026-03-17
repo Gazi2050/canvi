@@ -10,7 +10,14 @@ const Excalidraw = dynamic(
     const WrappedExcalidraw = (
       props: React.ComponentProps<typeof mod.Excalidraw>,
     ) => (
-      <mod.Excalidraw {...props}>
+      <mod.Excalidraw
+        {...props}
+        initialData={{
+          appState: {
+            theme: mod.THEME.DARK,
+          },
+        }}
+      >
         <mod.MainMenu>
           {/* Recreate default menu, but leave out social links */}
           <mod.MainMenu.DefaultItems.LoadScene />
