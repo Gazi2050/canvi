@@ -1,0 +1,6 @@
+{
+  "name": "freespace-collab",
+  "main": "parties/collab.ts",
+  "port": 1999
+}
+
