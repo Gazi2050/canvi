@@ -2,6 +2,7 @@ import type { ProjectMember } from '@/lib/db/schema'
 
 export type Project = {
   id: number
+  publicId: string
   ownerEmail: string
   title: string | null
   content: unknown
@@ -19,19 +20,21 @@ export async function listProjects(): Promise<Project[]> {
   return (await res.json()) as Project[]
 }
 
-export async function createProject(): Promise<{ id: number; title: string | null }> {
+export async function createProject(payload: {
+  title: string
+}): Promise<{ id: string; title: string | null }> {
   const res = await fetch('/api/projects', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({}),
+    body: JSON.stringify({ title: payload.title }),
   })
 
   if (!res.ok) {
     throw new Error('Failed to create project')
   }
 
-  return (await res.json()) as { id: number; title: string | null }
+  return (await res.json()) as { id: string; title: string | null }
 }
 

@@ -1,0 +1,1 @@
+ALTER TABLE "projects" ADD COLUMN "public_id" text NOT NULL;

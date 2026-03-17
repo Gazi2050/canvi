@@ -1,7 +1,19 @@
-import { auth } from '@clerk/nextjs/server'
+import { auth, currentUser } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { projects } from '@/lib/db/schema'
+
+const PUBLIC_ID_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+function generatePublicId(length: number = 12): string {
+  let result = ''
+  const max = PUBLIC_ID_CHARS.length
+  for (let i = 0; i < length; i += 1) {
+    const idx = Math.floor(Math.random() * max)
+    result += PUBLIC_ID_CHARS[idx]!
+  }
+  return result
+}
 
 export async function GET() {
   try {
@@ -14,19 +26,14 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { userId, sessionClaims } = await auth()
+  const { userId } = await auth()
 
   if (!userId) {
     return new NextResponse('Unauthorized', { status: 401 })
   }
 
-  const claims = sessionClaims as Record<string, unknown> | null
-  const ownerEmail =
-    typeof claims?.email === 'string'
-      ? (claims.email as string)
-      : typeof claims?.email_address === 'string'
-        ? (claims.email_address as string)
-        : undefined
+  const user = await currentUser()
+  const ownerEmail = user?.primaryEmailAddress?.emailAddress ?? undefined
 
   if (!ownerEmail) {
     return new NextResponse('Missing owner email', { status: 400 })
@@ -46,11 +53,13 @@ export async function POST(req: Request) {
 
   const isPublic = asRecord.isPublic === true
   const content = asRecord.content ?? {}
+  const publicId = generatePublicId()
 
   try {
     const [project] = await db
       .insert(projects)
       .values({
+        publicId,
         ownerEmail,
         title,
         content,
@@ -60,7 +69,7 @@ export async function POST(req: Request) {
       })
       .returning()
 
-    return NextResponse.json({ id: project.id, title: project.title })
+    return NextResponse.json({ id: project.publicId, title: project.title })
   } catch (err) {
     console.error('Failed to create project', err)
     return new NextResponse('Internal Server Error', { status: 500 })

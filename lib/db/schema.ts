@@ -11,6 +11,7 @@ export type ProjectMember = {
 
 export const projects = pgTable("projects", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  publicId: text("public_id").notNull(),
   ownerEmail: text("owner_email").notNull(),
   title: text("title"),
   content: jsonb("content").notNull().default(sql`'{}'::jsonb`),
