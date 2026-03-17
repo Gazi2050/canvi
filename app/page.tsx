@@ -1,12 +1,43 @@
-"use client"
+"use client";
 
-import { Tldraw } from 'tldraw'
-import 'tldraw/tldraw.css'
+import React from "react";
+import dynamic from "next/dynamic";
+import "@excalidraw/excalidraw/index.css";
+
+const Excalidraw = dynamic(
+  async () => {
+    const mod = await import("@excalidraw/excalidraw");
+    const WrappedExcalidraw = (
+      props: React.ComponentProps<typeof mod.Excalidraw>,
+    ) => (
+      <mod.Excalidraw {...props}>
+        <mod.MainMenu>
+          {/* Recreate default menu, but leave out social links */}
+          <mod.MainMenu.DefaultItems.LoadScene />
+          <mod.MainMenu.DefaultItems.SaveToActiveFile />
+          <mod.MainMenu.DefaultItems.SaveAsImage />
+          <mod.MainMenu.DefaultItems.Export />
+          <mod.MainMenu.DefaultItems.ToggleTheme />
+          <mod.MainMenu.DefaultItems.ChangeCanvasBackground />
+        </mod.MainMenu>
+      </mod.Excalidraw>
+    );
+
+    return { default: WrappedExcalidraw };
+  },
+  { ssr: false },
+);
 
 export default function App() {
-	return (
-		<div style={{ position: 'fixed', inset: 0 }}>
-			<Tldraw />
-		</div>
-	)
+  return (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        overflow: "hidden",
+      }}
+    >
+      <Excalidraw />
+    </div>
+  );
 }

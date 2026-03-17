@@ -9,10 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
     "next": "16.1.7",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "tldraw": "^4.4.1"
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
