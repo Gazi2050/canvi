@@ -12,19 +12,17 @@
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
-    "@faker-js/faker": "^10.3.0",
+    "dexie": "^4.3.0",
     "next": "16.1.7",
-    "partykit": "^0.0.115",
-    "partysocket": "^1.1.16",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "concurrently": "^9",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^9",
     "eslint": "^9",
     "eslint-config-next": "16.1.7",
     "tailwindcss": "^4",
