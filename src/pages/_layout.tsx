@@ -1,8 +1,8 @@
 import '../styles.css';
 
 import type { ReactNode } from 'react';
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
+import { Footer } from '@/components/custom/footer';
+import { Header } from '@/components/custom/header';
 
 type RootLayoutProps = { children: ReactNode };
 
