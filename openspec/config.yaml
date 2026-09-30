@@ -1,0 +1,34 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+context: |
+  Canvi — collaborative whiteboard: full-screen Excalidraw canvas + chat where the user AND an AI agent talk and draw together, with per-chat combined {messages, elements} history. Clerk auth planned.
+  Stack: Waku 1.0-rc.2 (React 19.3 + RSC, file routing in src/pages/), Hono middleware, Tailwind CSS v4 (CSS-first, no tailwind.config), shadcn/ui (new-york, radix), React Compiler (no hand-memoization), pnpm. Dev: pnpm dev → :3000. Scripts: dev, build, start, typegen.
+  Behavior authority: prototype/Whiteboard AI.html — port behavior, never code (chat sidebar, chat bar, hero prompt, GUIDE system prompt, 8 agent tools, 3-pass screenshot self-critique). Frozen reference only: old-version/ (Next.js + Excalidraw + Dexie — read, never copy or run).
+  Styling law: DESIGN.md; implementation: src/styles.css. Tailwind utilities only, no custom CSS classes. Never edit src/components/ui/ (CLI-managed) — wrap in src/components/custom/.
+  AI transport: AI SDK (useChat + Waku _api route), provider via env. Queries: Waku built-in (RSC + server actions + useOptimistic); SWR deferred unless a spec proves need.
+  Conventions: kebab-case files, named component exports, @/ alias (external, then @/, then relative), 'use client' only at interactive leaves, never hand-edit src/pages.gen.ts.
+  Verification: pnpm build passing + manual pnpm dev check, unless a spec mandates otherwise.
+  Deploy: Cloudflare Workers via waku/adapters/cloudflare + @cloudflare/vite-plugin (src/waku.server.tsx, wrangler.jsonc, nodejs_als); D1 database canvi-db bound as DB for chat documents; Clerk for auth; no R2 (images stay transient unless specced).
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+rules:
+  proposal:
+    - Scope to exactly one phrase; name out-of-scope follow-ups explicitly instead of absorbing them.
+  tasks:
+    - Never include tasks touching src/components/ui/; custom work goes in src/components/custom/ and new shadcn parts arrive only via `pnpm dlx shadcn@latest add <name>`.
+    - "End every phrase with: validate artifacts, run pnpm build, verify manually in pnpm dev."
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+operations:
+  apply:
+    guidance:
+      - Implement only what the active phrase spec defines; stop at its boundary and report the rest as follow-ups.
+  archive:
+    guidance:
+      - Archive only after the phrase acceptance checks pass in pnpm dev; summarize the outcome before finishing.

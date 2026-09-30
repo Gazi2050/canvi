@@ -77,7 +77,7 @@ The first viewport is the working surface, not a masthead. Choose the compositio
 
 Match the opening to the job:
 
-- **Canvi (an editor):** the blank canvas is the hero. Tools and the chat bar float above it as compact islands. No splash screen, no sign-in wall, no tour before the first stroke. When the canvas is empty, a centered hero prompt with suggestion chips invites the first move (see the prototype).
+- **Canvi (an editor):** the blank canvas is the hero. Tools and the chat bar float above it as compact islands. No splash screen, no tour before the first stroke (Clerk sign-in is the single permitted gate). When the canvas is empty, a centered hero prompt with suggestion chips invites the first move (see the prototype).
 - **A landing or explainer page:** show a real sketch, ideally editable or clearly a drawing, before any claim. Let the drawing carry the argument.
 - **Documentation:** plain paper background, calm text, hand-drawn diagrams as the evidence.
 - **A comparison or process:** draw it as boxes and arrows, on one shared visual basis, rather than describing it in prose.
@@ -184,7 +184,7 @@ The canvas has no page grid; it is infinite. The surrounding pages use a simple 
 
 ### Collaboration and interaction
 
-- Starting is free: no account, no setup before the first stroke. Sharing is one action that produces a link.
+- Starting is fast: Clerk sign-in is the single gate, then straight to the canvas — no tour, no setup, no onboarding beyond it. (Sole exception to the no-walls rule below.) Sharing is one action that produces a link.
 - Show other people (and agent activity) as small, unobtrusive indicators with distinct colors.
 - Provide undo and redo, keyboard shortcuts for every tool, and a way to export as an image, SVG, or the native file.
 - Autosave quietly. Do not interrupt the user with confirmations for reversible actions.
@@ -251,7 +251,7 @@ Do not ship any of these defaults:
 - Saturated fills, neon accents, or several competing accent colors.
 - Mixed roughness levels, mixed stroke weights, or clean vector shapes mixed with sketch shapes in one diagram.
 - Paragraphs set in the hand-drawn font.
-- Onboarding tours, sign-in walls, or cookie-style interruptions before the first stroke.
+- Onboarding tours, sign-in walls beyond the single Clerk gate, or cookie-style interruptions before the first stroke.
 - Stock photos, 3D illustrations, or mascots.
 - Icons in colored tiles, or mixed icon styles.
 - Decorative charts, legends that replace direct labels, or color without meaning.

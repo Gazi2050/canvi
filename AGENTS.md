@@ -17,7 +17,7 @@ These rules are binding for every agent, on every task. No exceptions without ex
    - Never directly edit anything in `src/components/ui/` — it is CLI-managed code.
    - If a component needs custom behavior or styling beyond what shadcn provides, create a new component in `src/components/custom/` that wraps or composes the shadcn component.
    - Add new shadcn components only via `pnpm dlx shadcn@latest add <name>`.
-7. **OpenSpec-driven development.** Work proceeds phase-by-phase according to OpenSpec definitions. Do not implement anything outside what OpenSpec specifies for the current phase/task. *(Until `openspec/` is initialized in this repo, scope your work strictly to the explicit task request. This rule becomes absolute once OpenSpec is set up.)*
+7. **OpenSpec-driven development.** Work proceeds phase-by-phase according to OpenSpec definitions. Do not implement anything outside what OpenSpec specifies for the current phase/task. This rule is absolute: `openspec/` is initialized — see `openspec/ROADMAP.md` for the phrase order.
 
 ---
 
@@ -43,12 +43,13 @@ These rules are binding for every agent, on every task. No exceptions without ex
 ### Stack
 
 - **Framework:** Waku 1.0.0-rc.2 — React Server Components meta-framework on Vite. File-based routing in `src/pages/`. Pages export `default` (component), optional `getData`, and `getConfig` (render mode: `'static' | 'dynamic'`).
-- **Server:** Hono middleware (see `src/middleware/`); API routes will live in `src/pages/api/` following Waku conventions when built.
+- **Server:** Hono middleware (see `src/middleware/`); API routes live in `src/pages/_api/` (Waku convention), dynamic by default. The agent route streams via the AI SDK (`useChat` on the client).
 - **UI:** React 19.3 with React Compiler enabled (babel preset in `waku.config.ts` — don't add manual `useMemo`/`useCallback` rituals; the compiler handles memoization).
 - **Styling:** Tailwind CSS v4 (Vite plugin, CSS-first config in `src/styles.css` — there is no `tailwind.config.js`) + shadcn/ui (new-york style, radix base).
 - **Canvas:** `@excalidraw/excalidraw` (as in both previous versions) — client-only, dynamically imported; it must never render server-side.
-- **Auth:** Clerk (planned; was proven in v1's earlier iterations).
-- **Persistence:** per-chat documents (messages + canvas elements). Old version used Dexie/IndexedDB; prototype used localStorage; final choice to be made per OpenSpec.
+- **Auth:** Clerk (per `clerk-auth`; was proven in v1's earlier iterations).
+- **Persistence:** per-chat documents (messages + canvas elements). localStorage now (prototype parity); D1 (`canvi-db`, binding `DB`) is the recorded future backend — see `chat-store-persistence` + `cloudflare-deploy`.
+- **Deploy:** Cloudflare Workers via `waku/adapters/cloudflare` (`src/waku.server.tsx`, owned by `cloudflare-deploy`); `nodejs_als` compat flag; no Node `fs` server-side; no Durable Objects.
 - **Package manager:** pnpm. **Node scripts:** `pnpm dev` (→ http://localhost:3000), `pnpm build`, `pnpm start`, `pnpm typegen`.
 
 ### Structure
@@ -78,11 +79,12 @@ canvi/
 ├── public/
 ├── components.json             # shadcn CLI config (new-york, rsc, @/ aliases)
 ├── DESIGN.md                   # Styling authority: design language + agent drawing rules
+├── openspec/                   # OpenSpec: changes/ (one folder per phrase), ROADMAP.md (master list), config.yaml
 ├── waku.config.ts              # Tailwind + React + React Compiler + @ alias
 └── tsconfig.json               # strict, bundler resolution, @/* → ./src/*
 ```
 
-**Planned modules (per the prototype, to be built phase-by-phase under OpenSpec — do not create them until a spec says so):** chat store (conversations, messages), canvas manager (Excalidraw API wrapper, commit/save), agent backend (LLM API route, tool schemas, system prompt), agent tools (`get_scene`, `draw_diagram`, `draw_cards`, `draw_elements`, `connect`, `update_elements`, `delete_elements`, `focus_view`), persistence layer (per-chat documents), Clerk auth wrapper.
+**Spec-owned modules (one OpenSpec change each — implement in ROADMAP order, archive before advancing):** chat store (`src/lib/chat-store.ts`), canvas island (`src/components/custom/whiteboard-canvas.tsx`), agent backend (`src/pages/_api/agent/chat.ts`, prompt in `src/lib/agent/`), agent tools (`src/lib/agent/tools.ts`: `get_scene`, `draw_diagram`, `draw_cards`, `draw_elements`, `connect`, `update_elements`, `delete_elements`, `focus_view`), D1 persistence, Clerk auth wrapper. See `openspec/changes/` + `openspec/ROADMAP.md`.
 
 ---
 
@@ -124,14 +126,14 @@ Target flow (from the prototype; to be implemented phase-by-phase):
 
 - **Naming:** components and files in `kebab-case.tsx` (`project-card.tsx` style); named exports for components (`export const Header`), default export for Waku pages. Types/interfaces in `PascalCase`.
 - **Imports:** use the `@/` alias for anything under `src/` (`@/components/custom/counter`, `@/lib/utils`). Keep import groups ordered: external packages, then `@/` imports, then relative.
-- **Client/server boundary:** Waku pages and layout are React Server Components by default. Add `'use client'` only at the leaves that need interactivity/state (see `counter.tsx`). Excalidraw and anything touching browser APIs must be client-only and dynamically imported (reference: `old-version/app/page.tsx` dynamic import pattern).
+- **Client/server boundary:** Waku pages and layout are React Server Components by default. Add `'use client'` only at the leaves that need interactivity/state (see `counter.tsx`). Excalidraw and anything touching browser APIs must be client-only `React.lazy` + `Suspense` islands — Waku has no `ssr:false` (reference: `canvas-foundation` design).
 - **Styling:** Tailwind utilities only, theme colors via shadcn tokens (`bg-primary`, `text-muted-foreground`, `border-border`, ...), radii via the `--radius` scale (`rounded-md` etc.). No new CSS files, no custom classes, no inline styles where utilities exist (rule 4/5).
 - **shadcn usage:** import from `@/components/ui/<name>`; compose rather than modify (rule 6). `cn()` comes from `@/lib/utils`.
-- **State management:** none chosen yet (prototype used vanilla local state + localStorage). Decide per OpenSpec when the chat store is built — don't pre-install state libraries.
+- **State management:** plain client store (`src/lib/chat-store.ts`, Phrase 02); no SWR/React Query unless a spec proves need. AI SDK `useChat` owns agent-conversation state.
 - **React Compiler is enabled** — write idiomatic React; don't hand-memoize unless profiling proves a need the compiler can't see.
 - **No test framework, linter, or formatter is configured yet.** Verification = `pnpm build` passing + manual check in `pnpm dev` unless OpenSpec says otherwise. State what you verified and how.
 - **Generated files:** never hand-edit `src/pages.gen.ts` (regenerate with `pnpm typegen`).
 
 ---
 
-*Last updated: 2026-09-30, after DESIGN.md creation. When the architecture or stack changes, update this file in the same task.*
+*Last updated: 2026-09-30, after OpenSpec rollout (8/8 changes) + deploy decisions. When the architecture or stack changes, update this file in the same task.*
